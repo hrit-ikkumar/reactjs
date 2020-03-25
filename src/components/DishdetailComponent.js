@@ -6,18 +6,19 @@ class DishDetail extends Component {
     renderComments(comments) {
         const coments = comments.map(comment => {
             return (
-                <li key={comment.id}>
+                <div key={comment.id}>
                     <p>{comment.comment}</p>
                     <p>-- {comment.author},
                     &nbsp;
-                    {new Intl.DateTimeFormat('pt-BR', {
-                        day: '2-digit',
-                        month: 'long',
-                        year: 'numeric'
-
-                    }).format(new Date(comment.date))}
+                    {
+                        new Intl.DateTimeFormat('en-US', {
+                            year:'numeric',
+                            month:'short',
+                            day:'2-digit'
+                        }).format(new Date(Date.parse(comment.date)))
+                    }
                     </p>
-                </li>
+                </div>
             )
         })
         return (
@@ -34,7 +35,7 @@ class DishDetail extends Component {
     renderDish(dish) {
         if (dish != null) {
             return (
-                <div className='col-12 col-md-5'>
+                <div className='col-12 col-md-5 m-1'>
                     <Card>
                         <CardImg width="100%" src={dish.image} alt={dish.name} />
                         <CardBody>
@@ -58,12 +59,14 @@ class DishDetail extends Component {
         const dishId = this.renderDish(dish)
         const commentDish = this.renderComments(dish.comments)
         return (
-            <div className='row'>
-                {dishId}
-                {commentDish}
+            <div className="container">
+                <div className='row'>
+                    {dishId}
+                    {commentDish}
+                </div>
             </div>
         )
     }
 }
 
-export default DishDetail
+export default DishDetail;

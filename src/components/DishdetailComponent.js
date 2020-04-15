@@ -31,10 +31,9 @@ class CommentForm extends Component {
             isModalOpen: !this.state.isModalOpen
         });
     }
-    handleComment(event) {
+    handleComment(values) {
         //this.toggleModal();
-        console.log(JSON.stringify(event));
-        alert(JSON.stringify(event));
+        this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
         //event.preventDefault();
     }
 
@@ -70,7 +69,7 @@ class CommentForm extends Component {
                                 <Row className="form-group"> 
                                     <Label htmlFor="author" md={2}>Your Name</Label>
                                     <Col md={10}>
-                                        <Control.text model=".author" id="author" name="author"
+                                      <Control.text model=".author" id="author" name="author"
                                            placeholder="Your Name"
                                            className="form-control"
                                            validators = {{
@@ -105,7 +104,7 @@ class CommentForm extends Component {
     }
 }
 
-function RenderComments({comments}) {
+function RenderComments({comments, addComment, dishId}) {
     const coments = comments.map(comment => {
         return (
             <div key={comment.id}>
@@ -129,7 +128,7 @@ function RenderComments({comments}) {
             <ul className="list-unstyled">
                 {coments}
             </ul>
-            <CommentForm />
+            <CommentForm dishId={dishId} addComment={addComment} />
         </div>
     );
 }
@@ -175,7 +174,7 @@ const DishDetail = props=> {
                 </div>
                 <div className="row">
                         <RenderDish dish={props.dish} />
-                        <RenderComments comments={props.comments} />
+                        <RenderComments comments={props.comments} addComment={props.addComment} dishId={props.dish.id} />
                 </div>
             </div>
         );

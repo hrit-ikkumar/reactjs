@@ -1,39 +1,35 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import {baseUrl} from'../shared/baseUrl';
+import {FadeTransform, Fade, Stagger} from 'react-animation-components';
 
 function RenderLeaders({leaders}) {
-    const leaderss = leaders.map(lead =>{
-        return (
-            <Media tag='li' key={lead.id} className='col-12 mt-5'>
-                < Media left top>
-                    <Media obj src={lead.image} alt={lead.name} />
-                </Media>
-                <Media body className='ml-5'>
-                    <Media heading>
-                    {lead.name}
-                    </Media>
-                    <p>{lead.designation}</p>
-                    <p>{lead.description}</p>
-                </Media>
-            </Media>
-        );
-    });
-
     return (
         <div className="list-unstyled">
-            {leaderss}
+            <Stagger in>
+                {leaders.leaders.map((lead) =>{
+                    return (
+                        <Media tag='li' key={lead.id} className='col-12 mt-5'>
+                            < Media left top>
+                                <Media obj src={baseUrl + lead.image} alt={lead.name} />
+                            </Media>
+                            <Media body className='ml-5'>
+                                <Media heading>
+                                {lead.name}
+                                </Media>
+                                <p>{lead.designation}</p>
+                                <p>{lead.description}</p>
+                            </Media>
+                        </Media>
+                    );
+                })}
+            </Stagger>
         </div>
     );
 }
 
 function About(props) {
-
-    const leaders = props.leaders.map((leader) => {
-        return (
-            <p>Leader {leader.name}</p>
-        );
-    });
 
     return(
         <div className="container">
